@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +13,9 @@ import ru.practicum.shareit.user.User;
 
 @Data
 @EqualsAndHashCode(of = {"id"})
-public class Booking {
+public class BookingDto {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NotNull

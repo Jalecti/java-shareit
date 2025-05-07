@@ -2,31 +2,27 @@ package ru.practicum.shareit.booking;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.time.LocalDateTime;
-
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
 
+import java.time.LocalDateTime;
+
 
 @Data
-@EqualsAndHashCode(of = {"id"})
-public class Booking {
+public class UpdateBookingRequest {
     private Long id;
-
-    @NotNull
     private LocalDateTime start;
-
-    @NotNull
     private LocalDateTime end;
-
-    @NotNull
     private Item item;
-
-    @NotNull
     private User booker;
-
-    @NotNull
     private BookingStatus status;
+
+    public boolean hasEnd() {
+        return !(end == null);
+    }
+
+    public boolean hasStatus() {
+        return !(status == null);
+    }
 }
+

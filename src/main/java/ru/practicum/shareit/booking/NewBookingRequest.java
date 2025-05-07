@@ -2,19 +2,13 @@ package ru.practicum.shareit.booking;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.time.LocalDateTime;
-
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
 
+import java.time.LocalDateTime;
 
 @Data
-@EqualsAndHashCode(of = {"id"})
-public class Booking {
-    private Long id;
-
+public class NewBookingRequest {
     @NotNull
     private LocalDateTime start;
 

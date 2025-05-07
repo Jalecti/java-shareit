@@ -1,5 +1,6 @@
 package ru.practicum.shareit.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -11,7 +12,9 @@ import ru.practicum.shareit.user.User;
 
 @Data
 @EqualsAndHashCode(of = {"id"})
-public class ItemRequest {
+public class ItemRequestDto {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NotBlank
