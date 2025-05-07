@@ -82,6 +82,7 @@ public class ItemServiceImpl implements ItemService {
 
     private void checkOwner(Long userId, Item item) {
         if (!item.getOwner().getId().equals(userId)) {
+            log.error("Пользователь с ID: {} не является владельцем предмета с ID: {}", userId, item.getId());
             throw new ForbiddenException("Пользователь с ID: " + userId +
                     " не является владельцем предмета с ID: " + item.getId());
         }
