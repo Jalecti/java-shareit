@@ -8,8 +8,8 @@ import java.util.*;
 
 @Repository
 public class InMemoryItemRepository implements Storage<Item> {
-    private Long counter;
     private final Map<Long, Item> items;
+    private Long counter;
 
     public InMemoryItemRepository() {
         counter = 0L;
@@ -45,12 +45,8 @@ public class InMemoryItemRepository implements Storage<Item> {
 
     @Override
     public Item update(Item newItem) {
-        Item itemToUpdate = items.get(newItem.getId());
-        itemToUpdate.setName(newItem.getName());
-        itemToUpdate.setDescription(newItem.getDescription());
-        itemToUpdate.setAvailable(newItem.getAvailable());
-        itemToUpdate.setOwner(newItem.getOwner());
-        return itemToUpdate;
+        //items.put(newItem.getId(), newItem); - для InMemory не требуется, тк обновляется в ItemServiceImpl
+        return newItem;
     }
 
     @Override
