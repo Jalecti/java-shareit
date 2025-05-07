@@ -15,7 +15,8 @@ public interface ItemService {
 
     void delete(Long userId, Long itemId);
 
-    Item checkItem(Long itemId);
+    // Item checkItem(Long itemId);
 
     Collection<ItemDto> findAllByText(Long userId, String text);
+
 }

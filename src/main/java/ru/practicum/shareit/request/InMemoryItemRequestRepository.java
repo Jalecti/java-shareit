@@ -1,15 +1,14 @@
 package ru.practicum.shareit.request;
 
 import org.springframework.stereotype.Repository;
-import ru.practicum.shareit.utility.Storage;
 
 import java.util.*;
 
 
 @Repository
-public class InMemoryItemRequestRepository implements Storage<ItemRequest> {
-    private Long counter;
+public class InMemoryItemRequestRepository implements ItemRequestStorage {
     private final Map<Long, ItemRequest> itemRequests;
+    private Long counter;
 
     public InMemoryItemRequestRepository() {
         counter = 0L;

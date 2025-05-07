@@ -1,15 +1,14 @@
 package ru.practicum.shareit.user;
 
 import org.springframework.stereotype.Repository;
-import ru.practicum.shareit.utility.Storage;
 
 import java.util.*;
 
 
 @Repository
-public class InMemoryUserRepository implements Storage<User> {
-    private Long counter;
+public class InMemoryUserRepository implements UserStorage {
     private final Map<Long, User> users;
+    private Long counter;
 
     public InMemoryUserRepository() {
         counter = 0L;

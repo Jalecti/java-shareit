@@ -1,22 +1,20 @@
 package ru.practicum.shareit.booking;
 
 import org.springframework.stereotype.Repository;
-import ru.practicum.shareit.utility.Storage;
 
 import java.util.*;
 
 
 @Repository
-public class InMemoryBookingRepository implements Storage<Booking> {
-    private Long counter;
+public class InMemoryBookingRepository implements BookingStorage {
     private final Map<Long, Booking> bookings;
+    private Long counter;
 
     public InMemoryBookingRepository() {
         counter = 0L;
         bookings = new HashMap<>();
     }
-
-
+    
     @Override
     public Collection<Booking> findAll() {
         return new ArrayList<>(bookings.values());

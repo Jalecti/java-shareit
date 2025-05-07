@@ -16,7 +16,7 @@ import java.util.Collection;
 @Slf4j
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
-    private final InMemoryItemRepository itemRepository;
+    private final ItemStorage itemRepository;
     private final UserService userService;
 
     @Override
@@ -72,8 +72,7 @@ public class ItemServiceImpl implements ItemService {
         log.info("Предмет {} с ID: {} удален", itemName, itemId);
     }
 
-    @Override
-    public Item checkItem(Long itemId) {
+    private Item checkItem(Long itemId) {
         return itemRepository.findById(itemId).orElseThrow(() -> {
             log.error("Предмет не найден с ID: {}", itemId);
             return new NotFoundException("Предмет не найден с ID: " + itemId);

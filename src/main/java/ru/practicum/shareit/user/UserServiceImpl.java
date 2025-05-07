@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final InMemoryUserRepository userRepository;
+    private final UserStorage userRepository;
 
     @Override
     public UserDto save(NewUserRequest newUserRequest) {
@@ -39,9 +39,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(Long userId, UpdateUserRequest updateUserRequest) {
-        checkUserEmail(updateUserRequest.getEmail());
+        User userToUpdate = checkUser(userId);
+        if (!userToUpdate.getEmail().equals(updateUserRequest.getEmail())) {
+            checkUserEmail(updateUserRequest.getEmail());
+        }
         updateUserRequest.setId(userId);
-        User updatedUser = UserMapper.updateUserFields(checkUser(userId), updateUserRequest);
+        User updatedUser = UserMapper.updateUserFields(userToUpdate, updateUserRequest);
         updatedUser = userRepository.update(updatedUser);
         log.info("Пользователь обновлен с ID: {}", userId);
         return UserMapper.mapToUserDto(updatedUser);
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService {
         });
     }
 
-    public void checkUserEmail(String userEmail) {
+    private void checkUserEmail(String userEmail) {
         if (userRepository.findByEmail(userEmail).isPresent()) {
             log.error("Пользователь с указанным email уже зарегистрирован: {}", userEmail);
             throw new ConflictEmailException("Пользователь с указанным email уже зарегистрирован: " + userEmail);

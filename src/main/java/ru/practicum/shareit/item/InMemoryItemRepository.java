@@ -1,13 +1,12 @@
 package ru.practicum.shareit.item;
 
 import org.springframework.stereotype.Repository;
-import ru.practicum.shareit.utility.Storage;
 
 import java.util.*;
 
 
 @Repository
-public class InMemoryItemRepository implements Storage<Item> {
+public class InMemoryItemRepository implements ItemStorage {
     private final Map<Long, Item> items;
     private Long counter;
 
@@ -21,6 +20,7 @@ public class InMemoryItemRepository implements Storage<Item> {
         return new ArrayList<>(items.values());
     }
 
+    @Override
     public Collection<Item> findAllByUserId(Long userId) {
         return items.values()
                 .stream()
@@ -28,6 +28,7 @@ public class InMemoryItemRepository implements Storage<Item> {
                 .toList();
     }
 
+    @Override
     public Collection<Item> findAllByText(Long userId, String text) {
         return items.values()
                 .stream()
