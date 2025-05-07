@@ -1,6 +1,5 @@
 package ru.practicum.shareit.booking;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;

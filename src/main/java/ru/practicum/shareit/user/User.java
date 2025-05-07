@@ -2,14 +2,12 @@ package ru.practicum.shareit.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 
 @Data
-@EqualsAndHashCode (of = {"id"})
+@EqualsAndHashCode(of = {"id"})
 public class User {
 
     private Long id;
