@@ -14,7 +14,7 @@ public class InMemoryBookingRepository implements BookingStorage {
         counter = 0L;
         bookings = new HashMap<>();
     }
-    
+
     @Override
     public Collection<Booking> findAll() {
         return new ArrayList<>(bookings.values());
