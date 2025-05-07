@@ -1,7 +1,6 @@
 package ru.practicum.shareit.booking;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
 
@@ -9,12 +8,20 @@ import java.time.LocalDateTime;
 
 
 @Data
-@EqualsAndHashCode(of = {"id"})
-public class Booking {
+public class UpdateBookingRequest {
     private Long id;
     private LocalDateTime start;
     private LocalDateTime end;
     private Item item;
     private User booker;
     private BookingStatus status;
+
+    public boolean hasEnd() {
+        return !(end == null);
+    }
+
+    public boolean hasStatus() {
+        return !(status == null);
+    }
 }
+
