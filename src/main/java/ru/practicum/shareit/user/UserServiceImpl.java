@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         }
         updateUserRequest.setId(userId);
         User updatedUser = UserMapper.updateUserFields(userToUpdate, updateUserRequest);
-        updatedUser = userRepository.update(updatedUser);
+        updatedUser = userRepository.save(updatedUser);
         log.info("Пользователь обновлен с ID: {}", userId);
         return UserMapper.mapToUserDto(updatedUser);
     }
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     public void delete(Long userId) {
         User userToDelete = checkUser(userId);
         String email = userToDelete.getEmail();
-        userRepository.delete(userId);
+        userRepository.deleteById(userId);
         log.info("Пользователь {} с ID: {} удален", email, userId);
     }
 

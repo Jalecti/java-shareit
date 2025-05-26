@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.practicum.shareit.item.ItemDto;
+import ru.practicum.shareit.user.UserDto;
 
 import java.time.LocalDateTime;
-
-import ru.practicum.shareit.item.Item;
-import ru.practicum.shareit.user.User;
 
 
 @Data
@@ -25,10 +24,10 @@ public class BookingDto {
     private LocalDateTime end;
 
     @NotNull
-    private Item item;
+    private ItemDto item;
 
     @NotNull
-    private User booker;
+    private UserDto booker;
 
     @NotNull
     private BookingStatus status;

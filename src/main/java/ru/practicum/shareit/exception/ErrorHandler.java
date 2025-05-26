@@ -25,6 +25,20 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleItemUnavailable(final ItemUnavailableException e) {
+        return new ErrorResponse("Ошибка с входным параметром.",
+                e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleUnavailableToComment(final UnavailableToCommentException e) {
+        return new ErrorResponse("Ошибка с входным параметром.",
+                e.getMessage());
+    }
+
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFound(final NotFoundException e) {
         return new ErrorResponse("Ошибка с указанным идентификатором", e.getMessage());
