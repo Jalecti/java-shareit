@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exception.ForbiddenException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.exception.ValidationException;
@@ -21,12 +22,14 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BookingServiceImpl implements BookingService {
     private final BookingStorage bookingRepository;
     private final UserService userService;
     private final ItemService itemService;
 
 
+    @Transactional
     @Override
     public BookingDto save(Long bookerId, NewBookingRequest newBookingRequest) {
         User booker = userService.checkUser(bookerId);
@@ -68,6 +71,7 @@ public class BookingServiceImpl implements BookingService {
         return BookingMapper.mapToBookingDto(booking, itemService.findItemById(booking.getItem().getId()));
     }
 
+    @Transactional
     @Override
     public BookingDto approveBooking(Long userId, Long bookingId, Boolean isApproved) {
         Booking booking = checkBooking(bookingId);
@@ -75,6 +79,7 @@ public class BookingServiceImpl implements BookingService {
         itemService.checkOwner(userId, item);
         BookingStatus newStatus = isApproved ? BookingStatus.APPROVED : BookingStatus.REJECTED;
         booking.setStatus(newStatus);
+        bookingRepository.save(booking);
         log.info("Владелец {} обновил статус запроса на бронирование предмета {} с ID: {} на статус: {}",
                 userId, item.getName(), item.getId(), booking.getStatus().name());
         return BookingMapper.mapToBookingDto(booking, itemService.findItemById(booking.getItem().getId()));

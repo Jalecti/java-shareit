@@ -3,6 +3,7 @@ package ru.practicum.shareit.item;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exception.ForbiddenException;
 import ru.practicum.shareit.exception.ItemUnavailableException;
 import ru.practicum.shareit.exception.NotFoundException;
@@ -20,12 +21,14 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ItemServiceImpl implements ItemService {
     private final ItemStorage itemRepository;
     private final UserService userService;
     private final CommentStorage commentRepository;
 
 
+    @Transactional
     @Override
     public ItemDto save(Long userId, NewItemRequest newItemRequest) {
         User owner = userService.checkUser(userId);
@@ -58,6 +61,7 @@ public class ItemServiceImpl implements ItemService {
                 .toList();
     }
 
+    @Transactional
     @Override
     public ItemDto update(Long userId, Long itemId, UpdateItemRequest updateItemRequest) {
         Item itemToUpdate = checkItem(itemId);
@@ -69,6 +73,7 @@ public class ItemServiceImpl implements ItemService {
         return ItemMapper.mapToItemDto(updatedItem, findAllCommentsByItemId(updatedItem.getId()));
     }
 
+    @Transactional
     @Override
     public void delete(Long userId, Long itemId) {
         Item itemToDelete = checkItem(itemId);
@@ -106,6 +111,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+    @Transactional
     @Override
     public CommentDto saveComment(User author, Item item, NewCommentRequest request) {
         Comment comment = CommentMapper.mapToComment(request, author, item);

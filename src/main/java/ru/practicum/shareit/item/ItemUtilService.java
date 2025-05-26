@@ -3,6 +3,7 @@ package ru.practicum.shareit.item;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.BookingDto;
 import ru.practicum.shareit.booking.BookingService;
 import ru.practicum.shareit.exception.UnavailableToCommentException;
@@ -20,6 +21,7 @@ import java.util.Map;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ItemUtilService {
     private final UserService userService;
     private final BookingService bookingService;
@@ -43,6 +45,7 @@ public class ItemUtilService {
                 .toList();
     }
 
+    @Transactional
     public CommentDto comment(Long authorId, Long itemId, NewCommentRequest request) {
         User author = userService.checkUser(authorId);
         Item item = itemService.checkItem(itemId);
