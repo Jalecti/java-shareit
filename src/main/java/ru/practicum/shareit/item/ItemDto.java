@@ -2,7 +2,7 @@ package ru.practicum.shareit.item;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.practicum.shareit.booking.BookingDto;
+import ru.practicum.shareit.booking.BookingShortDto;
 import ru.practicum.shareit.item.comment.CommentDto;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.UserDto;
@@ -19,7 +19,7 @@ public class ItemDto {
     private Boolean available;
     private UserDto owner;
     private ItemRequest request;
-    private BookingDto lastBooking;
-    private BookingDto nextBooking;
+    private BookingShortDto lastBooking;
+    private BookingShortDto nextBooking;
     private Collection<CommentDto> comments;
 }

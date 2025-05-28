@@ -13,6 +13,15 @@ import ru.practicum.shareit.user.User;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "Comment.forMapping",
+                attributeNodes = {
+                        @NamedAttributeNode("item"),
+                        @NamedAttributeNode("author")
+                }
+        )
+})
 @Table(name = "comments")
 @Data
 @EqualsAndHashCode(of = "id")

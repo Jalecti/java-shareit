@@ -48,6 +48,7 @@ public class ItemServiceImpl implements ItemService {
         return ItemMapper.mapToItemDto(item, findAllCommentsByItemId(itemId));
     }
 
+    @Override
     public Collection<ItemDto> findAllByText(String text) {
         if (text.isBlank()) return new ArrayList<>();
         Collection<Item> items = itemRepository.findAllByText(text);

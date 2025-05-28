@@ -10,6 +10,24 @@ import ru.practicum.shareit.user.User;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "Booking.forMapping",
+                attributeNodes = {
+                        @NamedAttributeNode("item"),
+                        @NamedAttributeNode("booker"),
+                        @NamedAttributeNode(value = "item", subgraph = "item-subgraph")
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "item-subgraph",
+                                attributeNodes = {
+                                        @NamedAttributeNode("owner")
+                                }
+                        )
+                }
+        )
+})
 @Table(name = "bookings")
 @Data
 @EqualsAndHashCode(of = {"id"})

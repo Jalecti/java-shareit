@@ -24,8 +24,8 @@ public interface BookingService {
 
     Boolean existsByBookerIdAndItemIdAndEndBefore(Long bookerId, Long itemId, LocalDateTime now);
 
-    Map<Long, BookingDto> findAllPrevsByItemIds(Collection<Long> itemIds);
+    Map<Long, BookingShortDto> findAllPrevsByItemIds(Collection<Long> itemIds);
 
-    Map<Long, BookingDto> findAllNextsByItemIds(Collection<Long> itemIds);
+    Map<Long, BookingShortDto> findAllNextsByItemIds(Collection<Long> itemIds);
 
 }

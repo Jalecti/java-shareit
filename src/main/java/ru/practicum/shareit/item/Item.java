@@ -9,6 +9,14 @@ import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
 @Entity
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "Item.forMapping",
+                attributeNodes = {
+                        @NamedAttributeNode("owner")
+                }
+        )
+})
 @Table(name = "items")
 @Data
 @EqualsAndHashCode(of = {"id"})

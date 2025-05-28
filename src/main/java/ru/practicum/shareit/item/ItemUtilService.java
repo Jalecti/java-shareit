@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.shareit.booking.BookingDto;
 import ru.practicum.shareit.booking.BookingService;
+import ru.practicum.shareit.booking.BookingShortDto;
 import ru.practicum.shareit.exception.UnavailableToCommentException;
 import ru.practicum.shareit.item.comment.CommentDto;
 import ru.practicum.shareit.item.comment.NewCommentRequest;
@@ -33,13 +33,13 @@ public class ItemUtilService {
         Collection<Item> items = itemRepository.findAllByOwnerId(ownerId);
         List<Long> itemIds = items.stream().map(Item::getId).toList();
         Map<Long, List<CommentDto>> commentsMap = itemService.findAllCommentsByItemIds(itemIds);
-        Map<Long, BookingDto> prevsMap = bookingService.findAllPrevsByItemIds(itemIds);
-        Map<Long, BookingDto> nextsMap = bookingService.findAllNextsByItemIds(itemIds);
+        Map<Long, BookingShortDto> prevsMap = bookingService.findAllPrevsByItemIds(itemIds);
+        Map<Long, BookingShortDto> nextsMap = bookingService.findAllNextsByItemIds(itemIds);
         return items.stream()
                 .map(item -> {
                     List<CommentDto> comments = commentsMap.getOrDefault(item.getId(), List.of());
-                    BookingDto prev = prevsMap.get(item.getId());
-                    BookingDto next = nextsMap.get(item.getId());
+                    BookingShortDto prev = prevsMap.get(item.getId());
+                    BookingShortDto next = nextsMap.get(item.getId());
                     return ItemMapper.mapToItemDto(item, comments, prev, next);
                 })
                 .toList();
