@@ -3,6 +3,7 @@ package ru.practicum.shareit.user;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exception.ConflictEmailException;
 import ru.practicum.shareit.exception.NotFoundException;
 
@@ -12,9 +13,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
     private final UserStorage userRepository;
 
+    @Transactional
     @Override
     public UserDto save(NewUserRequest newUserRequest) {
         checkUserEmail(newUserRequest.getEmail());
@@ -37,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.mapToUserDto(checkUser(userId));
     }
 
+    @Transactional
     @Override
     public UserDto update(Long userId, UpdateUserRequest updateUserRequest) {
         User userToUpdate = checkUser(userId);
@@ -45,16 +49,17 @@ public class UserServiceImpl implements UserService {
         }
         updateUserRequest.setId(userId);
         User updatedUser = UserMapper.updateUserFields(userToUpdate, updateUserRequest);
-        updatedUser = userRepository.update(updatedUser);
+        updatedUser = userRepository.save(updatedUser);
         log.info("Пользователь обновлен с ID: {}", userId);
         return UserMapper.mapToUserDto(updatedUser);
     }
 
+    @Transactional
     @Override
     public void delete(Long userId) {
         User userToDelete = checkUser(userId);
         String email = userToDelete.getEmail();
-        userRepository.delete(userId);
+        userRepository.deleteById(userId);
         log.info("Пользователь {} с ID: {} удален", email, userId);
     }
 

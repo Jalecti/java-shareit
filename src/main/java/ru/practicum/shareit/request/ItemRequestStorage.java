@@ -1,19 +1,8 @@
 package ru.practicum.shareit.request;
 
 
-import java.util.Collection;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ItemRequestStorage {
-
-    Collection<ItemRequest> findAll();
-
-    ItemRequest save(ItemRequest itemRequest);
-
-    ItemRequest update(ItemRequest newItemRequest);
-
-    void delete(Long itemRequestId);
-
-    Optional<ItemRequest> findById(Long itemRequestId);
+public interface ItemRequestStorage extends JpaRepository<ItemRequest, Long> {
 
 }

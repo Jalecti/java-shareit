@@ -1,4 +1,4 @@
-package ru.practicum.shareit.user;
+package ru.practicum.shareit.item;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -6,8 +6,9 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(of = {"id"})
-public class UserDto {
+public class ItemShortDto {
     private Long id;
     private String name;
-    private String email;
+    private Boolean available;
+    private String ownerEmail;
 }
