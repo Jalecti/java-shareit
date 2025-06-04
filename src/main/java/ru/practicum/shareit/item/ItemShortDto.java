@@ -10,5 +10,6 @@ public class ItemShortDto {
     private Long id;
     private String name;
     private Boolean available;
+    private Long ownerId;
     private String ownerEmail;
 }

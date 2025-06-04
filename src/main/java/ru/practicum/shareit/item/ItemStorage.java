@@ -26,4 +26,10 @@ public interface ItemStorage extends JpaRepository<Item, Long> {
             "AND (LOWER(i.name) LIKE LOWER(CONCAT('%', ?1, '%')) " +
             "OR LOWER(i.description) LIKE LOWER(CONCAT('%', ?1, '%')))")
     Collection<Item> findAllByText(String text);
+
+    @EntityGraph(value = "Item.forMapping")
+    Collection<Item> findAllByRequestId(Long requestId);
+
+    @EntityGraph(value = "Item.forMapping")
+    Collection<Item> findByRequestIdIn(Collection<Long> requestIds);
 }

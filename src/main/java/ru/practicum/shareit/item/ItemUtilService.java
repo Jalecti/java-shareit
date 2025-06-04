@@ -9,6 +9,7 @@ import ru.practicum.shareit.booking.BookingShortDto;
 import ru.practicum.shareit.exception.UnavailableToCommentException;
 import ru.practicum.shareit.item.comment.CommentDto;
 import ru.practicum.shareit.item.comment.NewCommentRequest;
+import ru.practicum.shareit.request.ItemRequestService;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserService;
 
@@ -27,7 +28,15 @@ public class ItemUtilService {
     private final BookingService bookingService;
     private final ItemService itemService;
     private final ItemStorage itemRepository;
+    private final ItemRequestService itemRequestService;
 
+    @Transactional
+    public ItemDto save(Long userId, NewItemRequest newItemRequest) {
+        Long requestId = newItemRequest.getRequestId();
+        return requestId == null
+                ? itemService.save(userId, newItemRequest, null)
+                : itemService.save(userId, newItemRequest, itemRequestService.checkItemRequest(requestId));
+    }
 
     public Collection<ItemDto> findAllByOwnerId(Long ownerId) {
         Collection<Item> items = itemRepository.findAllByOwnerId(ownerId);

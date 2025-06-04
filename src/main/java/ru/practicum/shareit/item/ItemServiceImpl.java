@@ -8,6 +8,7 @@ import ru.practicum.shareit.exception.ForbiddenException;
 import ru.practicum.shareit.exception.ItemUnavailableException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.comment.*;
+import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserService;
 
@@ -30,9 +31,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional
     @Override
-    public ItemDto save(Long userId, NewItemRequest newItemRequest) {
+    public ItemDto save(Long userId, NewItemRequest newItemRequest, ItemRequest request) {
         User owner = userService.checkUser(userId);
-        Item item = ItemMapper.mapToItem(newItemRequest, owner);
+        Item item = ItemMapper.mapToItem(newItemRequest, owner, request);
         item = itemRepository.save(item);
         log.info("Пользователь {} зарегистрировал предмет {} с ID: {}",
                 owner.getEmail(),
@@ -132,6 +133,13 @@ public class ItemServiceImpl implements ItemService {
                 .collect(Collectors.groupingBy(CommentDto::getItemId));
     }
 
+    @Override
+    public Map<Long, List<ItemShortDto>> findAllItemsByRequestIds(Collection<Long> requestIds) {
+        return itemRepository.findByRequestIdIn(requestIds).stream()
+                .map(ItemMapper::mapToShortDto)
+                .collect(Collectors.groupingBy(ItemShortDto::getId));
+    }
+
     private Collection<CommentDto> findAllCommentsByItemId(Long itemId) {
         return commentRepository.findByItemId(itemId)
                 .stream()
@@ -156,6 +164,13 @@ public class ItemServiceImpl implements ItemService {
                         Item::getId,
                         item -> ItemMapper.mapToItemDto(item, commentMap.getOrDefault(item.getId(), List.of()))
                 ));
+    }
+
+    @Override
+    public Collection<ItemShortDto> findAllByRequestId(Long requestId) {
+        return itemRepository.findAllByRequestId(requestId).stream()
+                .map(ItemMapper::mapToShortDto)
+                .toList();
     }
 
 

@@ -13,7 +13,8 @@ import ru.practicum.shareit.user.User;
         @NamedEntityGraph(
                 name = "Item.forMapping",
                 attributeNodes = {
-                        @NamedAttributeNode("owner")
+                        @NamedAttributeNode("owner"),
+                        @NamedAttributeNode("request")
                 }
         )
 })
@@ -42,7 +43,7 @@ public class Item {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_id")
     private ItemRequest request;
 }

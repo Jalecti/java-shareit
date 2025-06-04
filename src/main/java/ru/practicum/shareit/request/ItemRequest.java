@@ -11,6 +11,14 @@ import ru.practicum.shareit.user.User;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "ItemRequest.forMapping",
+                attributeNodes = {
+                        @NamedAttributeNode("requestor")
+                }
+        )
+})
 @Table(name = "item_requests")
 @Data
 @EqualsAndHashCode(of = {"id"})
