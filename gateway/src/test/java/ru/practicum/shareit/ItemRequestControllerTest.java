@@ -31,11 +31,9 @@ class ItemRequestControllerTest {
     @Test
     void create_whenInvokedWithCorrectJson_thenResponseStatusOk() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "description": "description1"
-                }
-                """;
+        String json = "{" +
+                "\"description\":\"description1\"" +
+                "}";
 
         when(itemRequestClient.create(any(), any())).thenReturn(ResponseEntity.ok().build());
 
@@ -58,11 +56,9 @@ class ItemRequestControllerTest {
 
     @Test
     void create_whenInvokedWOHeader_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "description": "description1"
-                }
-                """;
+        String json = "{" +
+                "\"description\":\"description1\"" +
+                "}";
 
         mockMvc.perform(post("/requests")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -75,11 +71,8 @@ class ItemRequestControllerTest {
     @Test
     void create_whenInvokedWithNullDescription_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                
-                }
-                """;
+        String json = "{" +
+                "}";
 
         mockMvc.perform(post("/requests")
                         .header("X-Sharer-User-Id", userId)
@@ -93,11 +86,9 @@ class ItemRequestControllerTest {
     @Test
     void create_whenInvokedWithEmptyDescription_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "description": ""
-                }
-                """;
+        String json = "{" +
+                "\"description\":\"\"" +
+                "}";
 
         mockMvc.perform(post("/requests")
                         .header("X-Sharer-User-Id", userId)
@@ -111,11 +102,9 @@ class ItemRequestControllerTest {
     @Test
     void create_whenInvokedWithBlankDescription_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "description": "            "
-                }
-                """;
+        String json = "{" +
+                "\"description\":\"           \"" +
+                "}";
 
         mockMvc.perform(post("/requests")
                         .header("X-Sharer-User-Id", userId)

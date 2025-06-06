@@ -33,13 +33,11 @@ class ItemControllerTest {
     @Test
     void create_whenInvokedWithCorrectJson_thenResponseStatusOk() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "description": "description1",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"description\":\"description1\"," +
+                "\"available\":false" +
+                "}";
 
         when(itemClient.create(any(), any())).thenReturn(ResponseEntity.ok().build());
 
@@ -66,13 +64,11 @@ class ItemControllerTest {
     @Test
     void create_whenInvokedWithEmptyName_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "",
-                  "description": "description1",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"\"," +
+                "\"description\":\"description1\"," +
+                "\"available\":false" +
+                "}";
 
         mockMvc.perform(post("/items")
                         .header("X-Sharer-User-Id", userId)
@@ -86,13 +82,11 @@ class ItemControllerTest {
     @Test
     void create_whenInvokedWithBlankName_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "         ",
-                  "description": "description1",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"            \"," +
+                "\"description\":\"description1\"," +
+                "\"available\":false" +
+                "}";
 
         mockMvc.perform(post("/items")
                         .header("X-Sharer-User-Id", userId)
@@ -106,12 +100,10 @@ class ItemControllerTest {
     @Test
     void create_whenInvokedWithNullName_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "description": "description1",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"description\":\"description1\"," +
+                "\"available\":false" +
+                "}";
 
         mockMvc.perform(post("/items")
                         .header("X-Sharer-User-Id", userId)
@@ -125,13 +117,11 @@ class ItemControllerTest {
     @Test
     void create_whenInvokedWithEmptyDescription_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "description": "",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"description\":\"\"," +
+                "\"available\":false" +
+                "}";
 
         mockMvc.perform(post("/items")
                         .header("X-Sharer-User-Id", userId)
@@ -145,13 +135,11 @@ class ItemControllerTest {
     @Test
     void create_whenInvokedWithBlankDescription_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "description": "                  ",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"description\":\"            \"," +
+                "\"available\":false" +
+                "}";
 
         mockMvc.perform(post("/items")
                         .header("X-Sharer-User-Id", userId)
@@ -165,12 +153,10 @@ class ItemControllerTest {
     @Test
     void create_whenInvokedWithNullDescription_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"available\":false" +
+                "}";
 
         mockMvc.perform(post("/items")
                         .header("X-Sharer-User-Id", userId)
@@ -184,12 +170,10 @@ class ItemControllerTest {
     @Test
     void create_whenInvokedWithNullAvailable_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "description": "description1"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"description\":\"description1\"" +
+                "}";
 
         mockMvc.perform(post("/items")
                         .header("X-Sharer-User-Id", userId)
@@ -202,12 +186,11 @@ class ItemControllerTest {
 
     @Test
     void create_whenInvokedWOHeader_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "name": "name1",
-                  "description": "description1"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"description\":\"description1\"," +
+                "\"available\":false" +
+                "}";
 
         mockMvc.perform(post("/items")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -311,13 +294,11 @@ class ItemControllerTest {
     void update_whenInvokedWithCorrectJson_thenResponseStatusOk() throws Exception {
         Long userId = 1L;
         Long itemId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "description": "description1",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"description\":\"description1\"," +
+                "\"available\":false" +
+                "}";
 
         when(itemClient.update(any(), any(), any())).thenReturn(ResponseEntity.ok().build());
 
@@ -346,13 +327,11 @@ class ItemControllerTest {
     @Test
     void update_whenInvokedWOHeader_thenResponseStatusBadRequest() throws Exception {
         Long itemId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "description": "description1",
-                  "available": false
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"description\":\"description1\"," +
+                "\"available\":false" +
+                "}";
 
         mockMvc.perform(patch("/items/{itemId}", itemId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -398,11 +377,9 @@ class ItemControllerTest {
     void comment_whenInvokedWithCorrectJson_thenResponseStatusOk() throws Exception {
         Long authorId = 1L;
         Long itemId = 1L;
-        String json = """
-                {
-                  "text": "text1"
-                }
-                """;
+        String json = "{" +
+                "\"text\":\"text1\"" +
+                "}";
 
         when(itemClient.comment(any(), any(), any())).thenReturn(ResponseEntity.ok().build());
 
@@ -430,11 +407,9 @@ class ItemControllerTest {
     @Test
     void comment_whenInvokedWOHeader_thenResponseStatusBadRequest() throws Exception {
         Long itemId = 1L;
-        String json = """
-                {
-                  "text": "text1"
-                }
-                """;
+        String json = "{" +
+                "\"text\":\"text1\"" +
+                "}";
         mockMvc.perform(post("/items/{itemId}/comment", itemId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -447,11 +422,9 @@ class ItemControllerTest {
     void comment_whenInvokedWithEmptyText_thenResponseStatusBadRequest() throws Exception {
         Long authorId = 1L;
         Long itemId = 1L;
-        String json = """
-                {
-                  "text": ""
-                }
-                """;
+        String json = "{" +
+                "\"text\":\"\"" +
+                "}";
         mockMvc.perform(post("/items/{itemId}/comment", itemId)
                         .header("X-Sharer-User-Id", authorId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -465,11 +438,9 @@ class ItemControllerTest {
     void comment_whenInvokedWithBlankText_thenResponseStatusBadRequest() throws Exception {
         Long authorId = 1L;
         Long itemId = 1L;
-        String json = """
-                {
-                  "text": "       "
-                }
-                """;
+        String json = "{" +
+                "\"text\":\"           \"" +
+                "}";
         mockMvc.perform(post("/items/{itemId}/comment", itemId)
                         .header("X-Sharer-User-Id", authorId)
                         .contentType(MediaType.APPLICATION_JSON)

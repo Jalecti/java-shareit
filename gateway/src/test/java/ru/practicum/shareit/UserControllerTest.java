@@ -32,12 +32,10 @@ class UserControllerTest {
 
     @Test
     void create_whenInvokedWithCorrectJson_thenResponseStatusOk() throws Exception {
-        String json = """
-                {
-                  "name": "name1",
-                  "email": "email1@email.com"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"email\":\"email1@email.com\"" +
+                "}";
 
         when(userClient.create(any())).thenReturn(ResponseEntity.ok().build());
 
@@ -57,12 +55,10 @@ class UserControllerTest {
 
     @Test
     void create_whenInvokedWithEmptyName_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "name": "",
-                  "email": "email1@email.com"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"\"," +
+                "\"email\":\"email1@email.com\"" +
+                "}";
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -74,12 +70,10 @@ class UserControllerTest {
 
     @Test
     void create_whenInvokedWithBlankName_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "name": "                       ",
-                  "email": "email1@email.com"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"           \"," +
+                "\"email\":\"email1@email.com\"" +
+                "}";
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -91,11 +85,9 @@ class UserControllerTest {
 
     @Test
     void create_whenInvokedWithNullName_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "email": "email1@email.com"
-                }
-                """;
+        String json = "{" +
+                "\"email\":\"email1@email.com\"" +
+                "}";
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -107,12 +99,10 @@ class UserControllerTest {
 
     @Test
     void create_whenInvokedWithIncorrectEmail_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "name": "name1",
-                  "email": "email1email.com"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"email\":\"email1email.com\"" +
+                "}";
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -124,12 +114,10 @@ class UserControllerTest {
 
     @Test
     void create_whenInvokedWithEmptyEmail_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "name": "name1",
-                  "email": ""
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"email\":\"\"" +
+                "}";
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -141,12 +129,10 @@ class UserControllerTest {
 
     @Test
     void create_whenInvokedWithBlankEmail_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "name": "name1",
-                  "email": "                         "
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"email\":\"                  \"" +
+                "}";
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -158,11 +144,9 @@ class UserControllerTest {
 
     @Test
     void create_whenInvokedWithNullEmail_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "name": "name1"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"" +
+                "}";
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -219,12 +203,10 @@ class UserControllerTest {
     @Test
     void update_whenInvokedWithCorrectJson_thenResponseStatusOk() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "email": "email1@email.com"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"email\":\"email1@email.com\"" +
+                "}";
 
         when(userClient.update(any(), any())).thenReturn(ResponseEntity.ok().build());
 
@@ -248,12 +230,10 @@ class UserControllerTest {
     @Test
     void update_whenInvokedWithInCorrectEmail_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "name": "name1",
-                  "email": "email1email.com"
-                }
-                """;
+        String json = "{" +
+                "\"name\":\"name1\"," +
+                "\"email\":\"email1email.com\"" +
+                "}";
 
         mockMvc.perform(patch("/users/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON)

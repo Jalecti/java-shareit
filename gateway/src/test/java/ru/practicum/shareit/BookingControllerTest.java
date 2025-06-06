@@ -36,13 +36,11 @@ class BookingControllerTest {
     @Test
     void create_whenInvokedWithCorrectJson_thenResponseStatusOk() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "itemId": 1,
-                  "start": "2099-06-04T01:32:56",
-                  "end": "2100-06-04T01:32:57"
-                }
-                """;
+        String json = "{" +
+                "\"itemId\":1," +
+                "\"start\":\"2099-06-04T01:32:56\"," +
+                "\"end\":\"2100-06-04T01:32:57\"" +
+                "}";
 
         when(bookingClient.create(any(), any())).thenReturn(ResponseEntity.ok().build());
 
@@ -67,13 +65,12 @@ class BookingControllerTest {
 
     @Test
     void create_whenInvokedWOHeader_thenResponseStatusBadRequest() throws Exception {
-        String json = """
-                {
-                  "itemId": 1,
-                  "start": "2099-06-04T01:32:56",
-                  "end": "2100-06-04T01:32:57"
-                }
-                """;
+        String json = "{" +
+                "\"itemId\":1," +
+                "\"start\":\"2099-06-04T01:32:56\"," +
+                "\"end\":\"2100-06-04T01:32:57\"" +
+                "}";
+
 
         mockMvc.perform(post("/bookings")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -86,12 +83,10 @@ class BookingControllerTest {
     @Test
     void create_whenInvokedWithNullItemId_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "start": "2099-06-04T01:32:56",
-                  "end": "2100-06-04T01:32:57"
-                }
-                """;
+        String json = "{" +
+                "\"start\":\"2099-06-04T01:32:56\"," +
+                "\"end\":\"2100-06-04T01:32:57\"" +
+                "}";
 
         mockMvc.perform(post("/bookings")
                         .header("X-Sharer-User-Id", userId)
@@ -105,12 +100,10 @@ class BookingControllerTest {
     @Test
     void create_whenInvokedWithNullStart_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "itemId": 1,
-                  "end": "2100-06-04T01:32:57"
-                }
-                """;
+        String json = "{" +
+                "\"itemId\":1," +
+                "\"end\":\"2100-06-04T01:32:57\"" +
+                "}";
 
         mockMvc.perform(post("/bookings")
                         .header("X-Sharer-User-Id", userId)
@@ -124,13 +117,11 @@ class BookingControllerTest {
     @Test
     void create_whenInvokedWithPastStart_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "itemId": 1,
-                  "start": "2000-06-04T01:32:56",
-                  "end": "2100-06-04T01:32:57"
-                }
-                """;
+        String json = "{" +
+                "\"itemId\":1," +
+                "\"start\":\"2000-06-04T01:32:56\"," +
+                "\"end\":\"2100-06-04T01:32:57\"" +
+                "}";
 
         mockMvc.perform(post("/bookings")
                         .header("X-Sharer-User-Id", userId)
@@ -144,12 +135,10 @@ class BookingControllerTest {
     @Test
     void create_whenInvokedWithNullEnd_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "itemId": 1,
-                  "start": "2099-06-04T01:32:56"
-                }
-                """;
+        String json = "{" +
+                "\"itemId\":1," +
+                "\"start\":\"2000-06-04T01:32:56\"" +
+                "}";
 
         mockMvc.perform(post("/bookings")
                         .header("X-Sharer-User-Id", userId)
@@ -163,13 +152,11 @@ class BookingControllerTest {
     @Test
     void create_whenInvokedWithPastOrPresentEnd_thenResponseStatusBadRequest() throws Exception {
         Long userId = 1L;
-        String json = """
-                {
-                  "itemId": 1,
-                  "start": "2099-06-04T01:32:56",
-                  "end": "2025-06-06T01:32:57"
-                }
-                """;
+        String json = "{" +
+                "\"itemId\":1," +
+                "\"start\":\"2000-06-04T01:32:56\"," +
+                "\"end\":\"2025-06-04T01:32:57\"" +
+                "}";
 
         mockMvc.perform(post("/bookings")
                         .header("X-Sharer-User-Id", userId)
