@@ -21,28 +21,28 @@ public class BookingController {
 	private final BookingClient bookingClient;
 
 	@PostMapping
-	public ResponseEntity<Object> create(@RequestHeader("X-Sharer-User-Id") long userId,
+	public ResponseEntity<Object> create(@RequestHeader("X-Sharer-User-Id") Long userId,
 			@RequestBody @Valid NewBookingRequest requestDto) {
 		log.info("Creating booking {}, userId={}", requestDto, userId);
 		return bookingClient.create(userId, requestDto);
 	}
 
 	@PatchMapping("/{bookingId}")
-	public ResponseEntity<Object> approve(@RequestHeader("X-Sharer-User-Id") long userId,
+	public ResponseEntity<Object> approve(@RequestHeader("X-Sharer-User-Id") Long userId,
 							  @PathVariable Long bookingId, @RequestParam("approved") Boolean isApproved) {
 		log.info("Approve booking {}, userId={}, approved={}", bookingId, userId, isApproved);
 		return bookingClient.approveBooking(userId, bookingId, isApproved);
 	}
 
 	@GetMapping("/{bookingId}")
-	public ResponseEntity<Object> findBookingById(@RequestHeader("X-Sharer-User-Id") long userId,
+	public ResponseEntity<Object> findBookingById(@RequestHeader("X-Sharer-User-Id") Long userId,
 			@PathVariable Long bookingId) {
 		log.info("Get booking {}, userId={}", bookingId, userId);
 		return bookingClient.findBookingById(userId, bookingId);
 	}
 
 	@GetMapping
-	public ResponseEntity<Object> findAllByBookerIdAndState(@RequestHeader("X-Sharer-User-Id") long userId,
+	public ResponseEntity<Object> findAllByBookerIdAndState(@RequestHeader("X-Sharer-User-Id") Long userId,
 											  @RequestParam(name = "state", defaultValue = "all") String stateParam) {
 		BookingState state = BookingState.from(stateParam)
 				.orElseThrow(() -> new IllegalArgumentException("Unknown state: " + stateParam));
@@ -51,7 +51,7 @@ public class BookingController {
 	}
 
 	@GetMapping("/owner")
-	public ResponseEntity<Object> findAllByOwnerIdAndState(@RequestHeader("X-Sharer-User-Id") long userId,
+	public ResponseEntity<Object> findAllByOwnerIdAndState(@RequestHeader("X-Sharer-User-Id") Long userId,
 															@RequestParam(name = "state", defaultValue = "all") String stateParam) {
 		BookingState state = BookingState.from(stateParam)
 				.orElseThrow(() -> new IllegalArgumentException("Unknown state: " + stateParam));

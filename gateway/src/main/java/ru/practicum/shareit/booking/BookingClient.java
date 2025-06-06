@@ -28,29 +28,29 @@ public class BookingClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> create(long userId, NewBookingRequest requestDto) {
+    public ResponseEntity<Object> create(Long userId, NewBookingRequest requestDto) {
         return post("", userId, requestDto);
     }
 
-    public ResponseEntity<Object> approveBooking(long userId, Long bookingId, boolean isApproved) {
+    public ResponseEntity<Object> approveBooking(Long userId, Long bookingId, Boolean isApproved) {
         Map<String, Object> parameters = Map.of(
                 "approved", isApproved
         );
         return patch("/" + bookingId + "?approved={approved}", userId, parameters, null);
     }
 
-    public ResponseEntity<Object> findBookingById(long userId, Long bookingId) {
+    public ResponseEntity<Object> findBookingById(Long userId, Long bookingId) {
         return get("/" + bookingId, userId);
     }
 
-    public ResponseEntity<Object> findAllByBookerIdAndState(long userId, BookingState state) {
+    public ResponseEntity<Object> findAllByBookerIdAndState(Long userId, BookingState state) {
         Map<String, Object> parameters = Map.of(
                 "state", state.name()
         );
         return get("?state={state}", userId, parameters);
     }
 
-    public ResponseEntity<Object> findAllByOwnerIdAndState(long userId, BookingState state) {
+    public ResponseEntity<Object> findAllByOwnerIdAndState(Long userId, BookingState state) {
         Map<String, Object> parameters = Map.of(
                 "state", state.name()
         );
