@@ -4,8 +4,10 @@ package ru.practicum.shareit.item.comment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
@@ -24,6 +26,8 @@ import java.time.LocalDateTime;
 })
 @Table(name = "comments")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Comment {
     @Id
