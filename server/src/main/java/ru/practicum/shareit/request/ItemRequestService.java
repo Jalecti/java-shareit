@@ -13,4 +13,8 @@ public interface ItemRequestService {
 
     ItemRequest checkItemRequest(Long itemRequestId);
 
+    ItemRequestDto findItemRequestById(Long requestorId, Long itemRequestId);
+
+    Collection<ItemRequestDto> findAllByRequestorId(Long requestorId, Boolean isForRequestor);
+
 }

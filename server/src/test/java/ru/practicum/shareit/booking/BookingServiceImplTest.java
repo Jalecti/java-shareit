@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.shareit.exception.BookingStatusException;
 import ru.practicum.shareit.exception.ForbiddenException;
-import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.ItemService;
 import ru.practicum.shareit.user.User;
@@ -57,25 +56,6 @@ class BookingServiceImplTest {
         assertEquals(BookingStatus.WAITING, result.getStatus());
 
         Mockito.verify(bookingRepository).save(Mockito.any());
-    }
-
-    @Test
-    void save_whenStartEqualsEnd_thenThrowsValidationException() {
-        NewBookingRequest request = new NewBookingRequest();
-        LocalDateTime now = LocalDateTime.now();
-        request.setStart(now);
-        request.setEnd(now);
-
-        assertThrows(ValidationException.class, () -> bookingService.save(1L, request));
-    }
-
-    @Test
-    void save_whenStartAfterEnd_thenThrowsValidationException() {
-        NewBookingRequest request = new NewBookingRequest();
-        request.setStart(LocalDateTime.now().plusDays(1));
-        request.setEnd(LocalDateTime.now());
-
-        assertThrows(ValidationException.class, () -> bookingService.save(1L, request));
     }
 
     @Test

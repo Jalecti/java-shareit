@@ -87,13 +87,6 @@ class ItemServiceImplUnitTest {
     }
 
     @Test
-    void findAllByText_whenTextIsBlank_thenReturnsEmptyList() {
-        Collection<ItemDto> result = itemService.findAllByText("   ");
-        assertTrue(result.isEmpty());
-        Mockito.verifyNoInteractions(itemRepository);
-    }
-
-    @Test
     void findAllByText_whenItemsFound_thenReturnsItemDtosWithComments() {
         String searchText = "text";
         Item item1 = new Item(1L, "text1", "desc1", true, new User(), null);

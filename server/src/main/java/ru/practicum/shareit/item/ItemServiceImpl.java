@@ -51,7 +51,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Collection<ItemDto> findAllByText(String text) {
-        if (text.isBlank()) return new ArrayList<>();
         Collection<Item> items = itemRepository.findAllByText(text);
         List<Long> itemIds = items.stream().map(Item::getId).toList();
         Map<Long, List<CommentDto>> commentsMap = findAllCommentsByItemIds(itemIds);

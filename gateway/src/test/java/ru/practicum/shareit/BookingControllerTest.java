@@ -12,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.booking.BookingClient;
 import ru.practicum.shareit.booking.BookingController;
-import ru.practicum.shareit.booking.BookingStateExceptionHandler;
 import ru.practicum.shareit.booking.dto.BookingState;
 import ru.practicum.shareit.booking.dto.NewBookingRequest;
+import ru.practicum.shareit.exception.ErrorHandler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = BookingController.class)
 @AutoConfigureMockMvc
-@Import(BookingStateExceptionHandler.class)
+@Import(ErrorHandler.class)
 class BookingControllerTest {
 
     @Autowired

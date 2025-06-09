@@ -12,6 +12,7 @@ import ru.practicum.shareit.item.dto.NewCommentRequest;
 import ru.practicum.shareit.item.dto.NewItemRequest;
 import ru.practicum.shareit.item.dto.UpdateItemRequest;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @Service
@@ -37,6 +38,7 @@ public class ItemClient extends BaseClient {
     }
 
     public ResponseEntity<Object> findAllByText(Long userId, String text) {
+        if (text.isBlank()) return ResponseEntity.ok(new ArrayList<>());
         Map<String, Object> parameters = Map.of(
                 "text", text
         );

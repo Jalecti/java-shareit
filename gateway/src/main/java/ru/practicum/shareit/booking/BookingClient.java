@@ -1,7 +1,9 @@
 package ru.practicum.shareit.booking;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -13,8 +15,10 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.shareit.booking.dto.NewBookingRequest;
 import ru.practicum.shareit.booking.dto.BookingState;
 import ru.practicum.shareit.client.BaseClient;
+import ru.practicum.shareit.exception.ValidationException;
 
 @Service
+@Slf4j
 public class BookingClient extends BaseClient {
     private static final String API_PREFIX = "/bookings";
 
@@ -29,6 +33,7 @@ public class BookingClient extends BaseClient {
     }
 
     public ResponseEntity<Object> create(Long userId, NewBookingRequest requestDto) {
+        checkBookingStartEndDate(requestDto);
         return post("", userId, requestDto);
     }
 
@@ -55,6 +60,16 @@ public class BookingClient extends BaseClient {
                 "state", state.name()
         );
         return get("/owner?state={state}", userId, parameters);
+    }
+
+    private void checkBookingStartEndDate(NewBookingRequest booking) {
+        LocalDateTime start = booking.getStart();
+        LocalDateTime end = booking.getEnd();
+        if (start.equals(end) || start.isAfter(end)) {
+            log.error("Ошибка с временем начала и конца бронирования start: {} end: {}", start, end);
+            throw new ValidationException("Ошибка с временем начала и конца бронирования " +
+                    "start: " + start + " end: " + end);
+        }
     }
 
 }

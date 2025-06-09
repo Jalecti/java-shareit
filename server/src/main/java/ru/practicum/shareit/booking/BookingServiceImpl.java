@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exception.BookingStatusException;
 import ru.practicum.shareit.exception.ForbiddenException;
 import ru.practicum.shareit.exception.NotFoundException;
-import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.item.ItemMapper;
 import ru.practicum.shareit.item.ItemService;
@@ -35,7 +34,6 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingDto save(Long bookerId, NewBookingRequest newBookingRequest) {
         User booker = userService.checkUser(bookerId);
-        checkBookingStartEndDate(newBookingRequest);
         Item item = itemService.checkAvailableItem(newBookingRequest.getItemId());
         Booking booking = BookingMapper.mapToBooking(newBookingRequest, item, booker, BookingStatus.WAITING);
         bookingRepository.save(booking);
@@ -123,15 +121,7 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    private void checkBookingStartEndDate(NewBookingRequest booking) {
-        LocalDateTime start = booking.getStart();
-        LocalDateTime end = booking.getEnd();
-        if (start.equals(end) || start.isAfter(end)) {
-            log.error("Ошибка с временем начала и конца бронирования start: {} end: {}", start, end);
-            throw new ValidationException("Ошибка с временем начала и конца бронирования " +
-                    "start: " + start + " end: " + end);
-        }
-    }
+
 
     private Collection<Booking> getFindMethodByStateForBooker(Long bookerId, BookingState state) {
         return switch (state) {
